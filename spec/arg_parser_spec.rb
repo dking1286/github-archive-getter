@@ -21,6 +21,10 @@ describe 'Arg_Parser' do
       
       expect {Arg_Parser.parse fake_argv}.to raise_error(ArgumentError)
     end
+
+    it 'should keep helper methods private' do
+      expect {Arg_Parser.validate_key '--hello'}.to raise_error(NoMethodError)
+    end
   end
   
 end

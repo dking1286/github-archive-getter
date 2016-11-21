@@ -4,19 +4,26 @@ module Arg_Parser
 
     i = 0
     until i >= args.length
-      self.validate_key args[i]
-      result[self.to_key(args[i])] = args[i + 1]
+      validate_key args[i]
+      result[to_key(args[i])] = args[i + 1]
       i += 2
     end
 
     result
   end
+  
+  class << self
+    private
 
-  def self.to_key arg
-    arg.sub(/^--/, '').to_sym
+    def to_key arg
+      arg.sub(/^--/, '').to_sym
+    end
+
+    def validate_key key
+      unless key =~ /^--/
+        raise ArgumentError, 'Each key must be preceded by "--"'
+      end
+    end
   end
 
-  def self.validate_key key
-    raise ArgumentError, 'Each key must be preceded by "--"' unless key =~ /^--/
-  end
 end 
