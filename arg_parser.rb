@@ -1,5 +1,5 @@
-module Arg_Parser
-  def self.parse args
+module ArgParser
+  def ArgParser.parse args
     result = {}
 
     i = 0
