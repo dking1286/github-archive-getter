@@ -1,0 +1,7 @@
+Validate inputs to UrlGenerator
+- Validate that passed in values can be parsed into DateTimes
+- Validate that passed in DateTimes are in the correct order
+
+Validate command line arguments
+- Require that the user pass something, or provide sensible defaults
+- Ensure that the after value comes before the before value
