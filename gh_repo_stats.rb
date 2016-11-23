@@ -26,10 +26,4 @@ histogram.to_a
     name, number = entry
     puts OutputFormatter.format name, number
   end
-# events = urls.flat_map {|url| GithubArchiveService.get_raw_data url}
 
-# histogram = GithubArchiveService.create_histogram(events, args[:event])
-
-# histogram.to_a
-#   .sort {|a, b| a[1] <=> b[1]}
-#   .each {|entry| puts "#{entry[0]} - #{entry[1]} events"}
