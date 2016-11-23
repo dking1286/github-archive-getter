@@ -1,7 +1,8 @@
 require 'date'
 
 module UrlGenerator
-  
+  BASE_URL = "http://data.githubarchive.org"
+
   def UrlGenerator.generate after, before
     after_dt = DateTime.parse after
     before_dt = DateTime.parse before
@@ -16,11 +17,12 @@ module UrlGenerator
     end
   end
 
+  # Helper methods
   class << self
     private
 
     def url_string year, month, day, hour
-      "http://data.githubarchive.org/#{year}-#{month}-#{day}-#{hour}.json.gz"
+      BASE_URL + "/#{year}-#{month}-#{day}-#{hour}.json.gz"
     end
 
     def to_two_digit num
