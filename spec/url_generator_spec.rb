@@ -10,7 +10,7 @@ describe 'UrlGenerator' do
       after = '2012-11-01T13:00:00Z'
       before = '2012-11-01T15:00:00Z'
 
-      expected = ['http://data.githubarchive.org/2012-11-01-{13..15}']
+      expected = ['http://data.githubarchive.org/2012-11-01-{13..15}.json.gz']
 
       expect(UrlGenerator.generate after, before).to eql expected
     end
@@ -20,8 +20,8 @@ describe 'UrlGenerator' do
       before = '2012-11-02T15:00:00Z'
 
       expected = [
-        'http://data.githubarchive.org/2012-11-01-{13..23}',
-        'http://data.githubarchive.org/2012-11-02-{0..15}'
+        'http://data.githubarchive.org/2012-11-01-{13..23}.json.gz',
+        'http://data.githubarchive.org/2012-11-02-{0..15}.json.gz'
       ]
 
       expect(UrlGenerator.generate after, before).to eql expected
@@ -32,9 +32,9 @@ describe 'UrlGenerator' do
       before = '2012-11-03T15:00:00Z'
 
       expected = [
-        'http://data.githubarchive.org/2012-11-01-{13..23}',
-        'http://data.githubarchive.org/2012-11-02-{0..23}',
-        'http://data.githubarchive.org/2012-11-03-{0..15}'
+        'http://data.githubarchive.org/2012-11-01-{13..23}.json.gz',
+        'http://data.githubarchive.org/2012-11-02-{0..23}.json.gz',
+        'http://data.githubarchive.org/2012-11-03-{0..15}.json.gz'
       ]
 
       expect(UrlGenerator.generate after, before).to eql expected

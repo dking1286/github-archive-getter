@@ -59,7 +59,7 @@ module UrlGenerator
     end
 
     def url_string year, month, day, hour
-      "http://data.githubarchive.org/#{year}-#{month}-#{day}-#{hour}"
+      "http://data.githubarchive.org/#{year}-#{month}-#{day}-#{hour}.json.gz"
     end
 
     def to_two_digit num
