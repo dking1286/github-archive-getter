@@ -21,7 +21,7 @@ end
 
 histogram.to_a
   .sort {|a, b| b[1] <=> a[1]}
-  .take(args[:count].to_i)
+  .take(args[:count].nil? ? histogram.length : args[:count].to_i)
   .each do |entry|
     name, number = entry
     puts OutputFormatter.format name, number
