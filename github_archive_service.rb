@@ -3,16 +3,6 @@ require 'zlib'
 require 'json'
 
 module GithubArchiveService
-  def GithubArchiveService.create_histogram raw_data, event_name=nil
-    raw_data.reduce(Hash.new(0)) do |result, entry|
-      should_be_included = (event_name.nil? || event_name == entry['type'])
-
-      result[entry['repo']['name']] += 1 if should_be_included
-      
-      result
-    end
-  end
-  
   def GithubArchiveService.get_each_response base_url, urls
     base_uri_obj = URI(base_url)
     Net::HTTP.start(base_uri_obj.host, base_uri_obj.port) do |http|
