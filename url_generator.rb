@@ -2,12 +2,17 @@ require 'date'
 
 module UrlGenerator
   BASE_URL = "http://data.githubarchive.org"
+  ONE_HOUR = 1/24.0
 
   def UrlGenerator.generate after, before
-    after_dt = DateTime.parse after
-    before_dt = DateTime.parse before
+    start_dt = DateTime.parse(after)
+    finish_dt = DateTime.parse(before)
 
-    after_dt.step(before_dt, 1/24.0).map do |datetime|
+    if start_dt > finish_dt
+      raise ArgumentError, "First argument #{after} is later than second argument #{before}"
+    end
+
+    (start_dt).step(finish_dt, ONE_HOUR).map do |datetime|
       year = datetime.year
       month = to_two_digit datetime.month
       day = to_two_digit datetime.day
@@ -17,7 +22,7 @@ module UrlGenerator
     end
   end
 
-  # Helper methods
+  # Anonymous class to hold private helper methods
   class << self
     private
 
