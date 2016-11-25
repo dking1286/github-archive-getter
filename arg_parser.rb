@@ -1,3 +1,5 @@
+require 'date'
+
 module ArgParser
   def ArgParser.parse args
     result = {}
@@ -9,9 +11,10 @@ module ArgParser
       i += 2
     end
 
-    result
+    include_default_args result
   end
   
+  # Anonymous class to hold private helper methods
   class << self
     private
 
@@ -24,6 +27,20 @@ module ArgParser
         raise ArgumentError, 'Each key must be preceded by "--"'
       end
     end
-  end
 
+    def include_default_args args_hash
+      defaults = {
+        after: '2011-02-12T00:00:00Z',
+        before: DateTime.now.to_s
+      }
+
+      args_with_defaults = {}
+      args_with_defaults[:after] = args_hash[:after] || defaults[:after]
+      args_with_defaults[:before] = args_hash[:before] || defaults[:before]
+      args_with_defaults[:event] = args_hash[:event]
+      args_with_defaults[:count] = args_hash[:count]
+
+      args_with_defaults
+    end
+  end
 end 
