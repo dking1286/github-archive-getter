@@ -13,7 +13,7 @@ module GithubArchiveService
     end
   end
   
-  def GithubArchiveService.get_response_data base_url, urls
+  def GithubArchiveService.get_each_response base_url, urls
     base_uri_obj = URI(base_url)
     Net::HTTP.start(base_uri_obj.host, base_uri_obj.port) do |http|
       urls.each do |url|
