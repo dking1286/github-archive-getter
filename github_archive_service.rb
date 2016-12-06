@@ -8,7 +8,7 @@ module GithubArchiveService
 
     # Use Typhoeus::Hydra to make HTTP requests in parallel
     # for performance
-    request_queue = Typhoeus::Hydra.new
+    request_queue = Typhoeus::Hydra.hydra
     responses = []
 
     urls.each do |url|
