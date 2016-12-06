@@ -1,0 +1,3 @@
+#!/bin/bash
+
+bundle exec ./gh_repo_stats.rb "$@"

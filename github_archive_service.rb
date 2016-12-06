@@ -1,25 +1,30 @@
-require 'net/http'
 require 'zlib'
 require 'json'
 
+require 'typhoeus'
+
 module GithubArchiveService
-  def GithubArchiveService.get_each_response base_url, urls
-    base_uri_obj = URI(base_url)
+  def GithubArchiveService.get_each_response urls
 
-    # Net::HTTP.start keeps the connection open if the server allows it
-    # when making multiple http requests
-    # We should do this for performance reasons
-    Net::HTTP.start(base_uri_obj.host, base_uri_obj.port) do |http|
-      urls.each do |url|
-        uri_obj = URI(url)
+    # Use Typhoeus::Hydra to make HTTP requests in parallel
+    # for performance
+    request_queue = Typhoeus::Hydra.hydra
+    responses = []
 
-        request = Net::HTTP::Get.new uri_obj
-        response = http.request request
-        entries = process_response response
-
-        yield entries
+    urls.each do |url|
+      request = Typhoeus::Request.new(url, timeout: 15000)
+      request.on_complete do |response|
+        if response.success?
+          responses.push(process_response response)
+        end
       end
+
+      request_queue.queue(request)
     end
+
+    request_queue.run
+
+    responses
   end
 
   def GithubArchiveService.get_repo_name event
