@@ -9,15 +9,16 @@ args = ArgParser.parse ARGV
 urls = UrlGenerator.generate args[:after], args[:before]
 
 histogram = Hash.new(0)
-GithubArchiveService.get_each_response UrlGenerator::BASE_URL, urls do |response_data|
-  response_data.each do |event|
-    next unless args[:event].nil? or event['type'] == args[:event]
+responses = GithubArchiveService.get_each_response(urls)
+response_data = responses.flatten
 
-    repo = GithubArchiveService.get_repo_name event
-    if not repo.nil?
-      key = GithubArchiveService.get_histogram_key repo
-      histogram[key] += 1
-    end
+response_data.each do |event|
+  next unless args[:event].nil? or event['type'] == args[:event]
+
+  repo = GithubArchiveService.get_repo_name event
+  if not repo.nil?
+    key = GithubArchiveService.get_histogram_key repo
+    histogram[key] += 1
   end
 end
 
